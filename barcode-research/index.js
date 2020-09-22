@@ -10,13 +10,13 @@ console.log("Connected devices path: ", devices[0].path)
 //     productID: 4608
 // }
 
-const options = {
-	path: '/dev/hidraw0'
-}
+// const options = {
+// 	path: '/dev/hidraw0'
+// }
 
 var deviceInfo = devices.find( function(d) {
     var isTeensy = d.vendorId===0x1504 && d.productId===0x4608;
-    return isTeensy && d.usagePage===0xFFAB && d.usage===0x200;
+    return isTeensy;
 });
 if( deviceInfo ) {
 

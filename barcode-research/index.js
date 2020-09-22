@@ -6,8 +6,8 @@ console.log("Connected devices: ", devices)
 console.log("Connected devices path: ", devices[0].path)
 
 const options = {
-    vendorID:  0x1504,
-    productID: 0x4608
+    vendorID:  '05e0',
+    productID: '1200'
 }
 
 // const options = {

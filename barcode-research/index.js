@@ -20,7 +20,7 @@ console.log("Connected devices path: ", devices[0].path)
 
 
   console.log("Start the scanner>>>>");
-  var device = new HID.HID(devices[0].path);
+  var device = new HID.HID(devices[0].vendorId , devices[0].productId);
 
   device.on("data", function(data) {
     console.log("Data from barcode:" , data);

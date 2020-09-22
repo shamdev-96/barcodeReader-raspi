@@ -37,6 +37,7 @@ device.on("data", function (data) {
       let barcode = scanResult.join("");
       scanResult = [];
       barcode = removeUTF8(barcode);
+      console.log("Data from barcode:", barcode);
 
       if (barcode === "BEGIN:VCARD") {
         vCard.push(barcode);

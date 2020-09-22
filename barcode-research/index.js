@@ -41,6 +41,8 @@ const options = {
 // }
 
 const scanner = new UsbScanner(options)
+var deviceScanner = UsbScanner.showDevices()
+console.log("List of devices:" , deviceScanner);
 
 scanner.on('data', (data) => {
     /// your code

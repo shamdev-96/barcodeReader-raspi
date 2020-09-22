@@ -25,6 +25,9 @@ var device = new HID.HID(devices[0].vendorId, devices[0].productId);
 let scanResult = [];
 let vCard = [];
 
+device.on("data",  (data) => {
+
+});
 // device.on("data", function (data) {
 
 // //   const modifierValue = data[0];
@@ -61,6 +64,7 @@ let vCard = [];
 //     console.log("-----------------------------------------------------------------");
   
 // });
+
 
 function removeUTF8(barcode) {
   let utf8 = barcode.slice(0, 7);

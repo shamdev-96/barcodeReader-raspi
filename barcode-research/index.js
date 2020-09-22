@@ -24,7 +24,6 @@ let vCard = [];
 device.on("data", function(data) {
     const modifierValue = data[0];
     const characterValue = data[2];
-
 			if (characterValue !== 0) {
 				if (modifierValue === 2 || modifierValue === 20) {
 					scanResult.push(this._hidMapShift[characterValue]);
@@ -34,14 +33,12 @@ device.on("data", function(data) {
 					let barcode = scanResult.join('');
 					scanResult = [];
 
-					barcode = removeUTF8(barcode);
-					
+					barcode = removeUTF8(barcode);					
 						if (barcode === 'BEGIN:VCARD') {
 							vCard.push(barcode);
 						} else if (barcode === 'END:VCARD') {
 							vCard.push(barcode);
-							vCard = vCard.join(this._vCardSeperator);
-							this.emit('data', vCard);
+							vCard = vCard.join('|');					
 							vCard = [];
 						} else if (vCard.length > 0 ) {
 							vCard.push(barcode);
@@ -50,15 +47,20 @@ device.on("data", function(data) {
 						this.emit('data', barcode);
 				}
             }
-            
+         
+
+  });
+
+  setTimeout(() =>
+  {
     console.log("-----------------------------------------------------------------");
     console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
     // let decodedData = atob(data.toString('utf8'));
     // console.log("Data from barcode CONVERT:" , decodedData)
     // // data.toString('base64'); //<-- Decodes to base64);
     console.log("-----------------------------------------------------------------");
-  });
-
+  },5000)
+  
 function removeUTF8(barcode) {
 	let utf8 = barcode.slice(0, 7);
 	if (utf8 === '\\000026') {

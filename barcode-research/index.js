@@ -15,8 +15,7 @@ console.log("Connected devices path: ", devices[0].path)
 // }
 
 var deviceInfo = devices.find( function(d) {
-    var isTeensy = d.vendorId==='05e0' && d.productId==='1200';
-    return isTeensy;
+    d.vendorId===1504 && d.productId===4608;
 });
 
 if( deviceInfo ) {

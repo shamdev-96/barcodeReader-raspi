@@ -48,7 +48,8 @@ device.on("data", function(data) {
 							vCard.push(barcode);
 						} else this.emit('data', barcode);
 					} else {
-						this.emit('data', barcode);
+                        this.emit('data', barcode);
+                        console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
                 }
                 // console.log("-----------------------------------------------------------------");
                 // console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal

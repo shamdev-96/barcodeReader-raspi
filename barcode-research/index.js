@@ -14,19 +14,18 @@ console.log("Connected devices path: ", devices[0].path)
 // 	path: '/dev/hidraw0'
 // }
 
-var deviceInfo = devices.find( function(d) {
-    d.vendorId===1504 && d.productId===4608;
-});
+// var deviceInfo = devices.find( function(d) {
+//     d.vendorId===1504 && d.productId===4608;
+// });
 
-if( deviceInfo ) {
 
   console.log("Start the scanner>>>>");
-  var device = new HID.HID( deviceInfo.path );
+  var device = new HID.HID(devices[0].path);
 
   device.on("data", function(data) {
     console.log("Data from barcode:" , data);
   });
-}
+
 
 
 // const scanner = new UsbScanner(options)

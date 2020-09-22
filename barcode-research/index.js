@@ -14,17 +14,13 @@ console.log("Connected devices path: ", devices[0].path)
 // 	path: '/dev/hidraw0'
 // }
 
-// var deviceInfo = devices.find( function(d) {
-//     d.vendorId===1504 && d.productId===4608;
-// });
-
-
 console.log("Start the scanner>>>>");
 var device = new HID.HID(devices[0].vendorId , devices[0].productId);
 
 device.on("data", function(data) {
     console.log("-----------------------------------------------------------------");
-    console.log("Data from barcode:" , data);
+    console.log("Data from barcode:" , data.toString('hex')) //<-- Decodes to hexadecimal
+    // data.toString('base64'); //<-- Decodes to base64);
     console.log("-----------------------------------------------------------------");
   });
 

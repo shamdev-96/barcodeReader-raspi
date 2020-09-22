@@ -46,10 +46,15 @@ device.on("data", function(data) {
 							vCard = [];
 						} else if (vCard.length > 0 ) {
 							vCard.push(barcode);
-						} else this.emit('data', barcode);
+                        } else 
+                        {
+                            console.log("Data from barcode:" , vCard)
+                            this.emit('data', barcode);
+                           
+                        }
 					} else {
-                        this.emit('data', barcode);
-                        console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
+                        console.log("Data from barcode:" , vCard)
+                        this.emit('data', barcode);              
                 }
                 // console.log("-----------------------------------------------------------------");
                 // console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
@@ -57,20 +62,9 @@ device.on("data", function(data) {
                 // // console.log("Data from barcode CONVERT:" , decodedData)
                 // // // data.toString('base64'); //<-- Decodes to base64);
                 // console.log("-----------------------------------------------------------------");
-            }
-         
+            }      
 
   });
-
-//   setTimeout(() =>
-//   {
-//     console.log("-----------------------------------------------------------------");
-//     console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
-//     // let decodedData = atob(data.toString('utf8'));
-//     // console.log("Data from barcode CONVERT:" , decodedData)
-//     // // data.toString('base64'); //<-- Decodes to base64);
-//     console.log("-----------------------------------------------------------------");
-//   },5000)
 
 function removeUTF8(barcode) {
 	let utf8 = barcode.slice(0, 7);

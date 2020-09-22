@@ -1,5 +1,6 @@
 const UsbScanner = require('@isirthijs/barcode-scanner');
 var HID = require('node-hid');
+var atob = require('atob');
 var devices = HID.devices();
 
 console.log("Connected devices: ", devices)

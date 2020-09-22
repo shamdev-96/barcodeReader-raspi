@@ -1,7 +1,11 @@
 const UsbScanner = require('@isirthijs/barcode-scanner');
 var HID = require('node-hid');
+const hidMap = require('./hidmap');
 var atob = require('atob');
 var devices = HID.devices();
+
+let _hidMap = hidMap.standard;
+let _hidMapShift = hidMap.shift;
 
 console.log("Connected devices: ", devices)
 console.log("Connected devices path: ", devices[0].path)
@@ -26,9 +30,9 @@ device.on("data", function(data) {
     const characterValue = data[2];
 			if (characterValue !== 0) {
 				if (modifierValue === 2 || modifierValue === 20) {
-					scanResult.push(this._hidMapShift[characterValue]);
+					scanResult.push(_hidMapShift[characterValue]);
 				} else if (characterValue !== 40) {
-					scanResult.push(this._hidMap[characterValue]);
+					scanResult.push(_hidMap[characterValue]);
 				} else if (characterValue === 40) {
 					let barcode = scanResult.join('');
 					scanResult = [];
@@ -60,7 +64,7 @@ device.on("data", function(data) {
     // // data.toString('base64'); //<-- Decodes to base64);
     console.log("-----------------------------------------------------------------");
   },5000)
-  
+
 function removeUTF8(barcode) {
 	let utf8 = barcode.slice(0, 7);
 	if (utf8 === '\\000026') {

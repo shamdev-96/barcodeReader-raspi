@@ -50,12 +50,12 @@ device.on("data", function(data) {
 					} else {
 						this.emit('data', barcode);
                 }
-                console.log("-----------------------------------------------------------------");
-                console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
-                // let decodedData = atob(data.toString('utf8'));
-                // console.log("Data from barcode CONVERT:" , decodedData)
-                // // data.toString('base64'); //<-- Decodes to base64);
-                console.log("-----------------------------------------------------------------");
+                // console.log("-----------------------------------------------------------------");
+                // console.log("Data from barcode:" , vCard) //<-- Decodes to hexadecimal
+                // // let decodedData = atob(data.toString('utf8'));
+                // // console.log("Data from barcode CONVERT:" , decodedData)
+                // // // data.toString('base64'); //<-- Decodes to base64);
+                // console.log("-----------------------------------------------------------------");
             }
          
 

@@ -20,10 +20,10 @@ var device = new HID.HID(devices[0].vendorId , devices[0].productId);
 
 device.on("data", function(data) {
     console.log("-----------------------------------------------------------------");
-    console.log("Data from barcode:" , data.toString('base64')) //<-- Decodes to hexadecimal
-    let decodedData = atob(data.toString('base64'));
-    console.log("Data from barcode CONVERT:" , decodedData)
-    // data.toString('base64'); //<-- Decodes to base64);
+    console.log("Data from barcode:" , data.toString('utf8')) //<-- Decodes to hexadecimal
+    // let decodedData = atob(data.toString('utf8'));
+    // console.log("Data from barcode CONVERT:" , decodedData)
+    // // data.toString('base64'); //<-- Decodes to base64);
     console.log("-----------------------------------------------------------------");
   });
 

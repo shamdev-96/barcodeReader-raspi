@@ -61,11 +61,19 @@ class BarcodeScanner extends EventEmitter {
 		let scanResult = [];
 		let vCard = [];
 
+		var test =  this.hid.readSync()
+		console.log('ReadSync result :' , test)
+
 		this.hid.on('data', (data) => {
 			console.log('data is enter ----> ')
+
+			var insideTest =  this.hid.readSync()
+			console.log('ReadSync INSIDE result :' , insideTest)
+
 			const modifierValue = data[0];
 			const characterValue = data[2];
 
+			while(characterValue)
 			if (characterValue !== 0) {
 				console.log('[characterValue !== 0]]')
 				if (modifierValue === 2 || modifierValue === 20) {

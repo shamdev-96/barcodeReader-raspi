@@ -33,6 +33,11 @@ scanner.on('data', (data) =>
   }
 
 });
+
+scanner.on('error ' , (err) =>
+{
+  console.log("Barcode Scanner Error" , err);
+});
  
 scanner.startScanning();
 

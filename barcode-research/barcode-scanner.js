@@ -124,17 +124,25 @@ class BarcodeScanner extends EventEmitter {
 				}		
 			}
 			else{
-				console.log('character Value is 0')
+				isProcessing = false
+				console.log('character Value is 0')		
+				await sleep(100)
+				if(isProcessing == false)
+				{	
+					console.log('no data comes in')
+				}
+				
 			}
 		});
 
+		
 		// if(isProcessing)
 		// {
-		// 	while (isProcessing) { 
-		// 		console.log("Processing barcode.." );
-		// 		await sleep(1000);
-		// 		isProcessing = false;
-		// 	}
+			// while (isProcessing) { 
+			// 	console.log("Processing barcode.." );
+			// 	await sleep(1000);
+			// 	isProcessing = false;
+			// }
 
 		// 	this.emit('data', barcode);
 		// 	console.log("Barcode: " , barcode );

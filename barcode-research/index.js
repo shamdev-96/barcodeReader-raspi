@@ -10,27 +10,20 @@ let _hidMapShift = hidMap.shift;
 console.log("Connected devices: ", devices);
 console.log("Connected devices path: ", devices[0].path);
 
-// const options = {
-//     vendorID:  '05e0',
-//     productID: '1200'
-// }
 
-// const options = {
-// 	path: '/dev/hidraw0'
-// }
 
-//console.log("Start the scanner>>>>");
+console.log("Start the scanner>>>>");
 
 var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
 console.log("Barcode device is: " , barcodeDevice );
-// var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
+var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
 
 // let scanResult = [];
 // let vCard = [];
 
-// device.on("data",  (data) => {
-
-// });
+device.on("data",  (data) => {
+  console.log("Data from barcode:", data);
+});
 // device.on("data", function (data) {
 
 // //   const modifierValue = data[0];
@@ -77,23 +70,23 @@ function removeUTF8(barcode) {
   } else return barcode;
 }
 
-const options = {
-    vendorID:  barcodeDevice.vendorId,
-    productID: barcodeDevice.productId
-}
+// const options = {
+//     vendorID:  barcodeDevice.vendorId,
+//     productID: barcodeDevice.productId
+// }
 
-const scanner = new UsbScanner(options)
+// const scanner = new UsbScanner(options)
 
-scanner.on('data', (data) => {
-    /// your code
-    console.log("Data from barcode:" , data);
-});
+// scanner.on('data', (data) => {
+//     /// your code
+//     console.log("Data from barcode:" , data);
+// });
 
-try{
-    console.log("Start the scanner>>>>");
-    scanner.startScanning()
-}
-catch (e)
-{
-    console.log("Error when start the scanner: " , e);
-}
+// try{
+//     console.log("Start the scanner>>>>");
+//     scanner.startScanning()
+// }
+// catch (e)
+// {
+//     console.log("Error when start the scanner: " , e);
+// }

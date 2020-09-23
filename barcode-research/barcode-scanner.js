@@ -58,7 +58,7 @@ class BarcodeScanner extends EventEmitter {
     let scanResult = [];
     let vCard = [];
 
-    let barcode = null
+    let barcode = ""
 
     this.hid.on("data", async (data) => {			
       const modifierValue = data[0];
@@ -96,9 +96,8 @@ class BarcodeScanner extends EventEmitter {
       } else {
 		  
 		await sleep(300)
-		scanResult = [];
-		let simplifiedBarcode = barcode.replace("b" , "")
-		simplifiedBarcode = simplifiedBarcode.subString(0,simplifiedBarcode.length()-1) 
+		let concanateString = barcode.subString(0,barcode.length-1)
+		let simplifiedBarcode = concanateString.replace("b" , "")
 		this.emit('data', simplifiedBarcode);
 		barcode = null;
 		//to delay until get full barcode data

@@ -96,13 +96,7 @@ class BarcodeScanner extends EventEmitter {
       } else {
 		  
 		await sleep(300)
-
-		if(barcode)
-		{
-			barcode = barcode.substring(0,barcode.length-1).replace("b" , "")
-			this.emit('data', barcode);
-		}
-
+		this.emit('data', barcode);
 		barcode = null
 		
       }

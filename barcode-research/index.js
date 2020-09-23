@@ -20,6 +20,7 @@ scanner.on('data', (data) =>
 {
   if(data)
   {
+    data = substring(0,data.length-1).replace("b" , "")
     //TODO: send barcode through socket
     console.log("Data from barcode:" , data); //eslint-disable-line 
   }

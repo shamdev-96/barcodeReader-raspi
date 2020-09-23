@@ -70,7 +70,6 @@ class BarcodeScanner extends EventEmitter {
 			const modifierValue = data[0];
 			const characterValue = data[2];
 
-			while(characterValue)
 			if (characterValue !== 0) {
 				console.log('[characterValue !== 0]]')
 				if (modifierValue === 2 || modifierValue === 20) {
@@ -114,13 +113,13 @@ class BarcodeScanner extends EventEmitter {
 						this.emit('data', barcode);
 						console.log('this.emit barcode LAST: ' , barcode)
 					}
-				}
+				}		
 			}
-
 			done = true;
 		});
 
 		while (!done) { 
+			console.log("Sleep prcocess " );
 			await sleep(50);
 		}
 

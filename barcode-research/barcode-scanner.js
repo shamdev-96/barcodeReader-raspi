@@ -120,7 +120,7 @@ class BarcodeScanner extends EventEmitter {
 
 		while (!done) { 
 			console.log("Sleep prcocess " );
-			await sleep(50);
+			await sleep(3000);
 		}
 
 		this.emit('data', barcode);

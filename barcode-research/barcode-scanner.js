@@ -60,7 +60,9 @@ class BarcodeScanner extends EventEmitter {
     let barcode = "";
 
     this.hid.on("data", async (data) => {
-      isProcessing = true;
+		
+	  isProcessing = true;
+	  let attempt = 0;
 
       console.log("data is enter ----> ");
       const modifierValue = data[0];
@@ -121,7 +123,13 @@ class BarcodeScanner extends EventEmitter {
         // dataIsEmpty = false
         console.log("character Value is 0");
 		await sleep(100)
+		attempt++;
 		console.log("finish sleep : " , isProcessing);
+		if(attempt > 1)
+		{
+			console.log("Barcode: ", barcode);
+		}
+		
         // if(isProcessing == false)
         // {
         // 	console.log('no data comes in')
@@ -129,7 +137,7 @@ class BarcodeScanner extends EventEmitter {
       }
     });
 
-    console.log("Barcode: ", barcode);
+  
 
     // if(isProcessing)
     // {

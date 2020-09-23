@@ -11,13 +11,15 @@ class BarcodeScanner extends EventEmitter {
       vendorID = undefined,
       productID = undefined,
       path = undefined,
-      vCardString = true,
+	  vCardString = true,
+	  isBusy = false,
       vCardSeperator = "|",
     } = options;
 
     super();
 
-    this.vendorID = vendorID;
+	this.vendorID = vendorID;
+	this.isBusy = isBusy;
     this.productID = productID;
     this.path = path;
     this._vCardString = vCardString;
@@ -36,8 +38,6 @@ class BarcodeScanner extends EventEmitter {
   }
 
   async startScanning() {
-
-	let isBusy = false;
 
     console.log("Start the scanner>>>>");
 
@@ -94,7 +94,7 @@ class BarcodeScanner extends EventEmitter {
           console.log("No need to process");
         }
       } else {
-		await sleep(500)
+		await sleep(300)
 		//to delay until get full barcode data
 		if(!isBusy)
 		{

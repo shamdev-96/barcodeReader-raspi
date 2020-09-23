@@ -74,6 +74,10 @@ class BarcodeScanner extends EventEmitter {
 				} else if (characterValue !== 40) {
 					console.log('scanResult.push [characterValue !== 40]')
 					scanResult.push(this._hidMap[characterValue]);
+					console.log('scanResult.push [characterValue !== 40]: ' ,scanResult)
+					let barcode = scanResult.join('');
+					barcode = removeUTF8(barcode);
+					console.log('scanResult.push [characterValue !== 40] Barcode: ' ,barcode)
 				} else if (characterValue === 40) {
 					console.log('scanResult.join [characterValue === 40]: ' , scanResult)
 					let barcode = scanResult.join('');	

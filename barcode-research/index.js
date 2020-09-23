@@ -14,14 +14,18 @@ const options = {
     productID: barcodeDevice.productId
 }
 
+
 const scanner = new BarcodeScanner(options)
 
 scanner.on('data', (data) => 
 {
+  let barcodeString = ""
   if(data)
   {
+    barcodeString = data
+    barcodeString = barcodeString.substring(0 , barcodeString.length -1).substring(1)  
     //TODO: send barcode through socket
-    console.log("Data from barcode:" , data); //eslint-disable-line 
+    console.log("Data from barcode:" , barcodeString); //eslint-disable-line 
   }
 
 });

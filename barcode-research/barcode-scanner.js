@@ -96,9 +96,14 @@ class BarcodeScanner extends EventEmitter {
       } else {
 		  
 		await sleep(300)
-		let concanateString = barcode.substring(0,barcode.length-1)
-		let simplifiedBarcode = concanateString.replace("b" , "")
-		this.emit('data', simplifiedBarcode);
+		
+		if(barcode != null)
+		{
+			let concanateString = barcode.substring(0,barcode.length-1)
+			let simplifiedBarcode = concanateString.replace("b" , "")
+			this.emit('data', simplifiedBarcode);
+		}
+
 		barcode = null;
 		//to delay until get full barcode data
 		// if(!this.isBusy)

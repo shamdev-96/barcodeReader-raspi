@@ -1,11 +1,8 @@
-//const UsbScanner = require("@isirthijs/barcode-scanner");
+
 var HID = require("node-hid");
-const hidMap = require("./hidmap");
-const EventEmitter = require('events');
 const BarcodeScanner = require('./barcode-scanner')
+
 var devices = HID.devices();
-
-
 var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
 console.log("Barcode device is detected: " , barcodeDevice );
 
@@ -14,36 +11,28 @@ const options = {
     productID: barcodeDevice.productId
 }
 
-
 const scanner = new BarcodeScanner(options)
 
 scanner.on('data', (data) => 
 {
-  let barcodeString = ""
+  let formattedBarcode = ""
+
   if(data)
   {
-    barcodeString = data
-    barcodeString = barcodeString.substring(0 , barcodeString.length -1).substring(1).substring(1)
+    formattedBarcode = data
+    /**
+     * Converted data from event to formatted barcode string
+     * Eg data: "bd06357715l"
+     * But, the exact barcode string is "06357715"
+     * So, we need to remove the last and first two character
+     */
+    formattedBarcode = formattedBarcode.substring(0 , formattedBarcode.length -1).substring(1).substring(1)
+
     //TODO: send barcode through socket
-    console.log("Data from barcode:" , barcodeString); //eslint-disable-line 
+    console.log("Data from barcode:" , formattedBarcode); //eslint-disable-line 
   }
 
 });
  
 scanner.startScanning();
 
-// const scanner = new UsbScanner(options)
-
-// scanner.on('data', (data) => {
-//     /// your code
-//     console.log("Data from barcode:" , data);
-// });
-
-// try{
-//     console.log("Start the scanner>>>>");
-//     scanner.startScanning()
-// }
-// catch (e)
-// {
-//     console.log("Error when start the scanner: " , e);
-// }

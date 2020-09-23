@@ -11,15 +11,15 @@ class BarcodeScanner extends EventEmitter {
       vendorID = undefined,
       productID = undefined,
       path = undefined,
-	  vCardString = true,
-	  isBusy = false,
+      vCardString = true,
+      isBusy = false,
       vCardSeperator = "|",
     } = options;
 
     super();
 
-	this.vendorID = vendorID;
-	this.isBusy = isBusy;
+    this.vendorID = vendorID;
+    this.isBusy = isBusy;
     this.productID = productID;
     this.path = path;
     this._vCardString = vCardString;
@@ -37,7 +37,6 @@ class BarcodeScanner extends EventEmitter {
   }
 
   async startScanning() {
-
     console.log("Start the scanner>>>>");
 
     try {
@@ -46,7 +45,9 @@ class BarcodeScanner extends EventEmitter {
         console.log("---Scanner is Succesfully Registered with Path---");
       } else if (this.vendorID && this.productID) {
         this.hid = new HID(this.vendorID, this.productID);
-        console.log("---Scanner is Succesfully Registered with VendorId & ProductId---");
+        console.log(
+          "---Scanner is Succesfully Registered with VendorId & ProductId---"
+        );
       } else {
         throw "Device cannot be found, please supply a path or VID & PID";
       }
@@ -57,14 +58,14 @@ class BarcodeScanner extends EventEmitter {
     let scanResult = [];
     let vCard = [];
 
-    let barcode = null
+    let barcode = null;
 
-    this.hid.on("data", async (data) => {			
+    this.hid.on("data", async (data) => {
       const modifierValue = data[0];
       const characterValue = data[2];
       if (characterValue !== 0) {
         if (modifierValue === 2 || modifierValue === 20) {
-       	 scanResult.push(this._hidMapShift[characterValue]);
+          scanResult.push(this._hidMapShift[characterValue]);
         } else if (characterValue !== 40) {
           scanResult.push(this._hidMap[characterValue]);
           barcode = scanResult.join("");
@@ -93,16 +94,19 @@ class BarcodeScanner extends EventEmitter {
           console.log("No need to process");
         }
       } else {
-		await sleep(300)
-		scanResult = []
-		this.emit('data', barcode);
-		barcode = null
-		
+        /**
+         * sleep here to make sure all buffer data is already completed processing
+         * then , take a completed barcode data and emit
+         */
+        await sleep(300);
+        scanResult = [];
+        this.emit("data", barcode);
+        barcode = null;
       }
     });
   }
 
-stopScanning() {
+  stopScanning() {
     this.hid.removeAllListeners("data");
     this.hid.close();
   }

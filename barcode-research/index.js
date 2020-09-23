@@ -20,7 +20,10 @@ console.log("Connected devices path: ", devices[0].path);
 // }
 
 console.log("Start the scanner>>>>");
-var device = new HID.HID(devices[0].vendorId, devices[0].productId);
+
+var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
+console.log("Barcode device is: " , barcodeDevice );
+var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
 
 let scanResult = [];
 let vCard = [];

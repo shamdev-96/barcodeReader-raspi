@@ -31,11 +31,12 @@ class BarcodeScanner extends EventEmitter {
 		this.startScanning = this.startScanning.bind(this);
 	}
 
+	
 	static showDevices() {
 		return devices;
 	}
 
-	startScanning() {
+	async startScanning() {
 		
 		console.log("Start the scanner>>>>");
 
@@ -61,15 +62,11 @@ class BarcodeScanner extends EventEmitter {
 		let scanResult = [];
 		let vCard = [];
 
-		var test =  this.hid.readSync()
-		console.log('ReadSync result :' , test)
-
+		// Wait for device to respond
+		let done = false;
+		let barcode = "";
 		this.hid.on('data', (data) => {
 			console.log('data is enter ----> ')
-
-			var insideTest =  this.hid.readSync()
-			console.log('ReadSync INSIDE result :' , insideTest)
-
 			const modifierValue = data[0];
 			const characterValue = data[2];
 
@@ -83,7 +80,7 @@ class BarcodeScanner extends EventEmitter {
 					console.log('scanResult.push [characterValue !== 40]')
 					scanResult.push(this._hidMap[characterValue]);
 					console.log('scanResult.push [characterValue !== 40]: ' ,scanResult)
-					let barcode = scanResult.join('');
+					barcode = scanResult.join('');
 					barcode = removeUTF8(barcode);
 					console.log('scanResult.push [characterValue !== 40] Barcode: ' ,barcode)
 				} else if (characterValue === 40) {
@@ -119,7 +116,19 @@ class BarcodeScanner extends EventEmitter {
 					}
 				}
 			}
+
+			done = true;
 		});
+
+		while (!done) { 
+			await sleep(50);
+		}
+
+		this.emit('data', barcode);
+		console.log("Barcode: " , barcode );
+		console.log("done");
+		this.hid.close();
+
 		
 	}
 
@@ -130,6 +139,11 @@ class BarcodeScanner extends EventEmitter {
 
 }
 
+let sleep = (milliseconds) => {
+	return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
+  
 function removeUTF8(barcode) {
 	console.log('Enter removeUTF8 function ')
 	let utf8 = barcode.slice(0, 7);

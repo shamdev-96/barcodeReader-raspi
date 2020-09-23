@@ -40,10 +40,10 @@ class BarcodeScanner extends EventEmitter {
     try {
       if (this.path) {
         this.hid = new HID(path);
-        console.log("---Scanner is Succesfully Registered---");
+        console.log("---Scanner is Succesfully Registered with Path---");
       } else if (this.vendorID && this.productID) {
         this.hid = new HID(this.vendorID, this.productID);
-        console.log("---Scanner is Succesfully Registered---");
+        console.log("---Scanner is Succesfully Registered with VendorId & ProductId---");
       } else {
         throw "Device cannot be found, please supply a path or VID & PID";
       }
@@ -54,106 +54,48 @@ class BarcodeScanner extends EventEmitter {
     let scanResult = [];
     let vCard = [];
 
-    // Wait for device to respond
-    let done = false;
-    let isProcessing = false;
     let barcode = "";
-	let isFinished = false;
-    this.hid.on("data", async (data) => {
-	
-		
-	if(isFinished == true)
-	{
-		return;
-	}		
-	  isProcessing = true;
-	  let attempt = 0;
 
-      console.log("data is enter ----> ");
+    this.hid.on("data", async (data) => {			
       const modifierValue = data[0];
       const characterValue = data[2];
-      console.log("modifierValue : ", modifierValue);
-      console.log("characterValue : ", characterValue);
       if (characterValue !== 0) {
-        console.log("[characterValue !== 0]]");
         if (modifierValue === 2 || modifierValue === 20) {
-          console.log(
-            "scanResult.push [modifierValue === 2 || modifierValue === 20]"
-          );
           scanResult.push(this._hidMapShift[characterValue]);
         } else if (characterValue !== 40) {
-          console.log("scanResult.push [characterValue !== 40]");
           scanResult.push(this._hidMap[characterValue]);
-          console.log("scanResult.push [characterValue !== 40]: ", scanResult);
           barcode = scanResult.join("");
           barcode = removeUTF8(barcode);
-          console.log(
-            "scanResult.push [characterValue !== 40] Barcode: ",
-            barcode
-          );
         } else if (characterValue === 40) {
-          console.log("scanResult.join [characterValue === 40]: ", scanResult);
-          let barcode = scanResult.join("");
-          console.log("scanResult.join [characterValue === 40]: ", barcode);
+          barcode = scanResult.join("");
           scanResult = [];
-
           barcode = removeUTF8(barcode);
-
           if (this._vCardString) {
             if (barcode === "BEGIN:VCARD") {
-              console.log("vCard.push[barcode === BEGIN:VCARD]: ", barcode);
               vCard.push(barcode);
             } else if (barcode === "END:VCARD") {
-              console.log("vCard.push[barcode === END:VCARD]:", barcode);
               vCard.push(barcode);
               vCard = vCard.join(this._vCardSeperator);
               this.emit("data", vCard);
-              console.log("this.emit : ", vCard);
               vCard = [];
             } else if (vCard.length > 0) {
-              console.log("vCard.push[vCard.length > 0]:", barcode);
               vCard.push(barcode);
             } else {
               this.emit("data", barcode);
-              console.log("this.emit barcode : ", barcode);
             }
           } else {
             this.emit("data", barcode);
-            console.log("this.emit barcode LAST: ", barcode);
           }
         } else {
           console.log("No need to process");
         }
       } else {
-        // dataIsEmpty = false
-        console.log("character Value is 0");
 		await sleep(500)
-		console.log("Barcode: ", barcode);
+		//to delay until get full barcode data
 		this.emit('data', barcode);
-		// attempt++;
-		// console.log("finish sleep : " , attempt);
-		// if(attempt > 1)
-		// {
-		// 	console.log("Barcode: ", barcode);
-		// }
-		
-        // if(isProcessing == false)
-        // {
-        // 	console.log('no data comes in')
-        // }
       }
     });
 
-  
-
-    // if(isProcessing)
-    // {
-
-    // 	this.emit('data', barcode);
-    // 	console.log("Barcode: " , barcode );
-    // 	console.log("done");
-    // 	this.hid.close();
-    // }
   }
 
   stopScanning() {
@@ -167,15 +109,11 @@ let sleep = (milliseconds) => {
 };
 
 function removeUTF8(barcode) {
-  console.log("Enter removeUTF8 function ");
   let utf8 = barcode.slice(0, 7);
   if (utf8 === "\\000026") {
-    console.log("Enter removeUTF8 function Barcode before slice: ", barcode);
     barcode = barcode.slice(7);
-    console.log("Enter removeUTF8 function Barcode after slice: ", barcode);
     return barcode;
   } else {
-    console.log("Return barcode: ", barcode);
     return barcode;
   }
 }

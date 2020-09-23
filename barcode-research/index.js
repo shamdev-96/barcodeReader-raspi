@@ -7,7 +7,7 @@ var devices = HID.devices();
 
 
 var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
-console.log("Barcode device is: " , barcodeDevice );
+console.log("Barcode device is detected: " , barcodeDevice );
 var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
 
 

@@ -65,7 +65,7 @@ class BarcodeScanner extends EventEmitter {
       const characterValue = data[2];
       if (characterValue !== 0) {
         if (modifierValue === 2 || modifierValue === 20) {
-          scanResult.push(this._hidMapShift[characterValue]);
+        //   scanResult.push(this._hidMapShift[characterValue]);
         } else if (characterValue !== 40) {
           scanResult.push(this._hidMap[characterValue]);
           barcode = scanResult.join("");
@@ -95,7 +95,7 @@ class BarcodeScanner extends EventEmitter {
         }
       } else {
 		  
-		await sleep(300)
+		await sleep(200)
 		scanResult = [];
 		this.emit('data', barcode);
 		barcode = null;

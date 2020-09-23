@@ -122,7 +122,7 @@ class BarcodeScanner extends EventEmitter {
       } else {
         // dataIsEmpty = false
         console.log("character Value is 0");
-		await sleep(100)
+		await sleep(500)
 		attempt++;
 		console.log("finish sleep : " , attempt);
 		if(attempt > 1)

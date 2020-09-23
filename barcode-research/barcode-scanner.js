@@ -94,7 +94,6 @@ class BarcodeScanner extends EventEmitter {
           console.log("No need to process");
         }
       } else {
-		  
 		await sleep(300)
 		this.emit('data', barcode);
 		barcode = null

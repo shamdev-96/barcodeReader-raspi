@@ -64,8 +64,12 @@ class BarcodeScanner extends EventEmitter {
 
 		// Wait for device to respond
 		let done = false;
+		let isProcessing = false;
 		let barcode = "";
 		this.hid.on('data', (data) => {
+
+			isProcessing = true;
+
 			console.log('data is enter ----> ')
 			const modifierValue = data[0];
 			const characterValue = data[2];
@@ -115,12 +119,12 @@ class BarcodeScanner extends EventEmitter {
 					}
 				}		
 			}
-			done = true;
 		});
 
-		while (!done) { 
-			console.log("Sleep prcocess " );
-			await sleep(3000);
+		while (isProcessing) { 
+			console.log("Processing barcode.." );
+			await sleep(1000);
+			isProcessing = false;
 		}
 
 		this.emit('data', barcode);

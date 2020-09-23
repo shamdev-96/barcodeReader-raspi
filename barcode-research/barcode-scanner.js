@@ -95,19 +95,20 @@ class BarcodeScanner extends EventEmitter {
         }
       } else {
 		await sleep(300)
+		this.emit('data', barcode);	
 		//to delay until get full barcode data
-		if(!this.isBusy)
-		{
-			this.isBusy = true;
-			this.emit('data', barcode);		
-		}
+		// if(!this.isBusy)
+		// {
+		// 	this.isBusy = true;
+		// 	this.emit('data', barcode);		
+		// }
 		
       }
     });
 
   }
 
-  stopScanning() {
+stopScanning() {
     this.hid.removeAllListeners("data");
     this.hid.close();
   }

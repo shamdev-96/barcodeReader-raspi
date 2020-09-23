@@ -18,7 +18,12 @@ const scanner = new BarcodeScanner(options)
 
 scanner.on('data', (data) => 
 {
+  if(data)
+  {
+    //TODO: send barcode through socket
     console.log("Data from barcode:" , data); //eslint-disable-line 
+  }
+
 });
  
 

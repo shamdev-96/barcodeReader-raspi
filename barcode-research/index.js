@@ -22,7 +22,7 @@ const scanner = new BarcodeScanner(options)
 scanner.on('data', (data) => 
  console.log("Data from barcode:" , data)); //eslint-disable-line
 
-await scanner.startScanning();
+scanner.startScanning();
 
 // const scanner = new UsbScanner(options)
 

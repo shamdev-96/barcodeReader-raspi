@@ -58,9 +58,14 @@ class BarcodeScanner extends EventEmitter {
     let done = false;
     let isProcessing = false;
     let barcode = "";
-
+	let isFinished = false;
     this.hid.on("data", async (data) => {
+	
 		
+	if(isFinished == true)
+	{
+		return;
+	}		
 	  isProcessing = true;
 	  let attempt = 0;
 
@@ -123,9 +128,9 @@ class BarcodeScanner extends EventEmitter {
         // dataIsEmpty = false
         console.log("character Value is 0");
 		await sleep(200)
+		isFinished = true;
 		console.log("Barcode: ", barcode);
 		this.emit('data', barcode);
-		return;
 		// attempt++;
 		// console.log("finish sleep : " , attempt);
 		// if(attempt > 1)

@@ -30,11 +30,15 @@ class BarcodeScanner extends EventEmitter {
     this.startScanning = this.startScanning.bind(this);
   }
 
+
   static showDevices() {
     return devices;
   }
 
   async startScanning() {
+
+	let isBusy = false;
+
     console.log("Start the scanner>>>>");
 
     try {
@@ -92,7 +96,12 @@ class BarcodeScanner extends EventEmitter {
       } else {
 		await sleep(500)
 		//to delay until get full barcode data
-		this.emit('data', barcode);
+		if(!isBusy)
+		{
+			isBusy = true;
+			this.emit('data', barcode);		
+		}
+		
       }
     });
 

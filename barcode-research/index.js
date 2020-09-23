@@ -8,9 +8,6 @@ var devices = HID.devices();
 
 var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
 console.log("Barcode device is detected: " , barcodeDevice );
-var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
-
-
 
 const options = {
     vendorID:  barcodeDevice.vendorId,
@@ -18,15 +15,10 @@ const options = {
 }
 
 const scanner = new BarcodeScanner(options)
-let inComingData = ''
+
 scanner.on('data', (data) => 
 {
-  if(inComingData == '')
-  {
-    inComingData = data;
-   console.log("Data from barcode:" , data); //eslint-disable-line
-  }
-  
+    console.log("Data from barcode:" , data); //eslint-disable-line 
 });
  
 

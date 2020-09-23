@@ -95,7 +95,7 @@ class BarcodeScanner extends EventEmitter {
         }
       } else {
 		  
-		await sleep(200)
+		await sleep(100)
 		scanResult = [];
 		this.emit('data', barcode);
 		barcode = null;

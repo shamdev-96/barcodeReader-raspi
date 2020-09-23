@@ -21,8 +21,13 @@ var device = new HID.HID(barcodeDevice.vendorId, barcodeDevice.productId);
 // let scanResult = [];
 // let vCard = [];
 
+let byteData = []
 device.on("data",  (data) => {
-  console.log("Data from barcode:", data);
+  while(data)
+  {
+    byteData.push(data)
+  }
+  console.log("Data from barcode:", byteData);
 });
 // device.on("data", function (data) {
 

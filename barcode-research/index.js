@@ -23,7 +23,7 @@ scanner.on('data', (data) =>
   if(data)
   {
     barcodeString = data
-    barcodeString = barcodeString.substring(0 , barcodeString.length -1).substring(1)  
+    barcodeString = barcodeString.substring(0 , barcodeString.length -1).substring(1).substring(1)
     //TODO: send barcode through socket
     console.log("Data from barcode:" , barcodeString); //eslint-disable-line 
   }

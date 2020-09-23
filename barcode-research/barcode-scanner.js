@@ -96,9 +96,9 @@ class BarcodeScanner extends EventEmitter {
       } else {
 		await sleep(300)
 		//to delay until get full barcode data
-		if(!isBusy)
+		if(!this.isBusy)
 		{
-			isBusy = true;
+			this.isBusy = true;
 			this.emit('data', barcode);		
 		}
 		

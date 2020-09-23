@@ -95,7 +95,7 @@ class BarcodeScanner extends EventEmitter {
         }
       } else {
 		  
-		await sleep(250)
+		await sleep(300)
 		scanResult = [];
 		let simplifiedBarcode = barcode.replace("b" , "")
 		simplifiedBarcode = simplifiedBarcode.subString(0,simplifiedBarcode.length()-1) 

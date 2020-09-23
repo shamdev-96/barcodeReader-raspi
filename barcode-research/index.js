@@ -3,6 +3,7 @@ var HID = require("node-hid");
 const BarcodeScanner = require('./barcode-scanner')
 
 var devices = HID.devices();
+console.log("List of devices:" , devices );
 var barcodeDevice = devices.find(item => item.product.includes("Scanner"))
 console.log("Barcode device is detected: " , barcodeDevice );
 

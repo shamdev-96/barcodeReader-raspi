@@ -20,7 +20,7 @@ const options = {
 const scanner = new BarcodeScanner(options)
 
 scanner.on('data', (data) => 
-console.log("Data from barcode:" , data)); //eslint-disable-line
+ console.log("Data from barcode:" , data)); //eslint-disable-line
 
 scanner.startScanning();
 

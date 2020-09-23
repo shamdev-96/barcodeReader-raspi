@@ -73,7 +73,8 @@ class BarcodeScanner extends EventEmitter {
 			console.log('data is enter ----> ')
 			const modifierValue = data[0];
 			const characterValue = data[2];
-
+			console.log('modifierValue : ' , modifierValue)
+			console.log('characterValue : ' , characterValue)
 			if (characterValue !== 0) {
 				console.log('[characterValue !== 0]]')
 				if (modifierValue === 2 || modifierValue === 20) {
